@@ -10,7 +10,7 @@ const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
 const AuthenticateUser = require("../controllers/Public_Controllers/User/AuthenticateUser");
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
-const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
+// const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
 const router = Router();
 
 const limiter = rateLimit({
@@ -47,7 +47,7 @@ router.get("/GetUserByEmail",GetUserByEmail)
 router.get("/GetUser",GetUsers)
 //projects
 router.post("/PostProjects",PostProjects)
-router.delete("/DeleteProject",DeleteProject)
+// router.delete("/DeleteProject",DeleteProject)
 
 
 module.exports = router;
