@@ -17,6 +17,12 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+
+            checkedemail: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: true,
+            },
             picture: {
                 type: DataTypes.STRING,
                 allowNull: true,
@@ -25,13 +31,13 @@ module.exports = (sequelize) => {
             admin: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
-                allowNull: false,
+                allowNull: true,
             },
    
             country:{
                 type: DataTypes.STRING,
                 defaultValue:false,
-                allowNull: false,
+                allowNull: true,
             },
             password: { 
                 type: DataTypes.STRING,

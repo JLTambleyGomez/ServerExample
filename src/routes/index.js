@@ -2,6 +2,7 @@ const { Router } = require("express");
 const rateLimit = require('express-rate-limit');
 const upload = require('../utils/multer/multer'); 
 const authMiddleware = require("../security/authMiddleware");
+const PutCheckEmail = require("../controllers/Public_Controllers/User/PutCheckEmail");
 const GetProjects = require("../controllers/Public_Controllers/Projects/GetProjects");
 const PostProjects = require("../controllers/Admin_Controllers/PostProjects");
 const GetReviews = require("../controllers/Public_Controllers/Reviews/GetReviews");
@@ -41,7 +42,7 @@ router.use(authMiddleware)
 router.post("/PostReview",PostReview)
 //user 
 router.get("/GetUserByEmail",GetUserByEmail)
-
+router.put("/VerifyEmail",PutCheckEmail)
 
 //users only administration
 router.get("/GetUser",GetUsers)
