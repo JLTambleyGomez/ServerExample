@@ -11,6 +11,8 @@ const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
 const AuthenticateUser = require("../controllers/Public_Controllers/User/AuthenticateUser");
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
+const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb");
+const SolicitudeProjects = require("../controllers/Public_Controllers/Projects/SolicitudeProjects");
 // const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
 const router = Router();
 
@@ -21,14 +23,15 @@ const limiter = rateLimit({
   });
 
   const limiterPostUser = rateLimit({
-    windowMs: 10000, 
+    windowMs: 1000, 
     max: 2, 
     message: 'Demasiadas solicitudes desde esta IP, intente de nuevo más tarde.',
   });
 
 //user
-router.get("/AuthenticateUser",limiter,AuthenticateUser)
+router.post("/AuthenticateUser",limiter,AuthenticateUser)
 router.post("/PostUser",limiterPostUser, upload.single('picture'),PostUser)
+router.post("/CheckUserDb",limiter,CheckUserDb)
 
 //projects
 router.get("/GetProjects",limiter,GetProjects)
@@ -37,7 +40,8 @@ router.get("/GetReviews",limiter,GetReviews)
 
 //routesProtected/////////////////////////////////////////////////////////////////////////////////////
 router.use(authMiddleware)
-
+//projects
+router.post("SolicitudeProjects",SolicitudeProjects)
 // reviews
 router.post("/PostReview",PostReview)
 //user 

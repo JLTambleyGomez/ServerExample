@@ -7,7 +7,7 @@ const secretKey = Secret_Key_Security;
 
 const AuthenticateUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password,admin } = req.body;
        //validación (sanitizado)
        if (!email || !password) {
         return res.status(400).json({ message: 'Por favor, ingrese un email y una contraseña válida' });

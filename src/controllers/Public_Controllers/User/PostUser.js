@@ -16,7 +16,7 @@ cloudinary.config({
 const PostUser = async (req, res) => {
     try {
       const { name, email, password, country } = req.body;
-      let pictureUrl = '';
+      let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1691329757/_b79b5441-a3f7-449e-ba5d-24c5be6c9207_q4m1au.jpg';
       const existingUser = await User.findOne({ where: { email } });
 
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
@@ -28,6 +28,9 @@ const PostUser = async (req, res) => {
 /////////////////SI NO HAY NOMBRE OCUPAR PARTE DEL EMAIL /////////////////////////////////////////////////////////////////////////////
       if (!name) {
         name = email.split('@')[0]; 
+      }
+      if (!country) {
+        country= "No Especificado"
       }
 //////////////////////////////////////////////////////////////////////////////////////////////
       if (existingUser) {
@@ -61,10 +64,16 @@ const mailOptions = {
   from: OFFICIAL_EMAIL,
   to: email,
   subject: "Bienvenido a Programmers Guru",
-  text: `¡Hola ${name}!\n\nGracias por registrarte en nuestra aplicación. 
-  ¡Esperamos que disfrutes usando nuestros servicios!\n\nPor favor,
-   haz clic en el siguiente enlace para verificar tu correo electrónico:
-    ${DEPLOYMENT_URL}/VerifyEmail\n\nSaludos,\nEl equipo de ProgrammersGuru`,
+  html: `
+    <h1>¡Hola ${name}!</h1>
+    <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1691336612/Programmers_d0arws.png" alt="Programmers Guru" width="300">
+    <p>Gracias por registrarte en nuestra aplicación. ¡Esperamos que disfrutes usando nuestros servicios!</p>
+    <p>Puedes dejar comentarios y puntuaciones en tu proyecto una vez publicado en nuestra página para esto.</p>
+    <h2>Haz clic en el siguiente enlace para verificar tu correo electrónico:</h2>
+    <a href="${DEPLOYMENT_URL}/VerifyEmail">${DEPLOYMENT_URL}/VerifyEmail</a>
+    <p>Saludos,</p>
+    <p>El equipo de ProgrammersGuru</p>
+  `,
 };
 
 transporter.sendMail(mailOptions, (error, info) => {
@@ -76,6 +85,7 @@ transporter.sendMail(mailOptions, (error, info) => {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+transporter.close(); // Cerrar la conexión del transportador
 
       console.log("Posting New User, your cool man ");
       return res.status(201).json(newUser);

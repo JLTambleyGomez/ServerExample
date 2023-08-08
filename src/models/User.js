@@ -26,7 +26,6 @@ module.exports = (sequelize) => {
             picture: {
                 type: DataTypes.STRING,
                 allowNull: true,
-                defaultValue: "https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-24.jpg"
             },
             admin: {
                 type: DataTypes.BOOLEAN,
