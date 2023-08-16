@@ -9,6 +9,7 @@ const GetReviews = require("../controllers/Public_Controllers/Reviews/GetReviews
 const PostReview = require("../controllers/Public_Controllers/Reviews/PostReview");
 const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
+const PutUser = require("../controllers/Public_Controllers/User/PutUser");
 const AuthenticateUser = require("../controllers/Public_Controllers/User/AuthenticateUser");
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
 const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb");
@@ -47,6 +48,7 @@ router.post("/SolicitudeProjects",limiter,SolicitudeProjects)
 // reviews
 router.post("/PostReview",PostReview)
 //user 
+router.put("/PutUser",limiter,upload.single('picture'),PutUser)
 router.get("/GetUserByEmail",GetUserByEmail)
 router.post("/ReSendEmailVerification",limiter,ReSendEmail)
 
