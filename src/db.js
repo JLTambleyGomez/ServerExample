@@ -1,10 +1,12 @@
 const { Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
 
 require("dotenv").config(); // para recibir las constantes de .env
 const { DB_DEPLOY } = process.env;
+
 
 // DEPLOYMENT:
 const sequelize = new Sequelize(
@@ -13,6 +15,10 @@ const sequelize = new Sequelize(
         native: false,
     }
 );
+
+
+
+
 
 const basename = path.basename(__filename);
 
@@ -38,10 +44,11 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Review, Project} =
-    sequelize.models; //Sequaliza los modelos > ejemplo
+
+const { Country,Activity } = sequelize.models;
 
 // Aca vendrian las relaciones
+
 User.hasMany(Review, { foreignKey: "userId" });
 Review.belongsTo(User, { foreignKey: "userId" });
 
@@ -51,8 +58,7 @@ Project.belongsTo(User, { foreignKey: "userId" });
 Project.hasMany(Review, { foreignKey: "projectId" });
 Review.belongsTo(Project, { foreignKey: "projectId" });
 
-
 module.exports = {
-    ...sequelize.models,
-    conn: sequelize, 
+  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
 };

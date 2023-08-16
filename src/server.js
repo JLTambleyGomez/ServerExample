@@ -9,7 +9,7 @@ require("./db.js");
 
 const server = express();
 
-server.name = "PROGRAMERSGURU_TEAM_WEBPAGE";
+server.name = "PROGRAMERS-GURU";
 
 server.use(cors())
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
