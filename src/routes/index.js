@@ -38,6 +38,7 @@ router.post("/CheckUserDb",limiter,CheckUserDb)
 router.get("/GetProjects",limiter,GetProjects)
 // reviews
 router.get("/GetReviews",limiter,GetReviews)
+router.put("/PutCheckEmail",limiter,PutCheckEmail)
 
 //routesProtected/////////////////////////////////////////////////////////////////////////////////////
 router.use(authMiddleware)
@@ -47,7 +48,6 @@ router.post("/SolicitudeProjects",limiter,SolicitudeProjects)
 router.post("/PostReview",PostReview)
 //user 
 router.get("/GetUserByEmail",GetUserByEmail)
-router.put("/PutCheckEmail",limiter,PutCheckEmail)
 router.post("/ReSendEmailVerification",limiter,ReSendEmail)
 
 //users only administration
