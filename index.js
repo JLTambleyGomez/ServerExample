@@ -1,5 +1,6 @@
 const server = require("./src/server");
 const { conn } = require("./src/db.js");
+require("dotenv").config(); // para recibir las constantes de .env
 const PORT = process.env.PORT || 3000;
 
 conn.sync({ alter:true})
