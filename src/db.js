@@ -45,7 +45,7 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { Country,Activity } = sequelize.models;
+const { User,Review,Project } = sequelize.models;
 
 // Aca vendrian las relaciones
 
