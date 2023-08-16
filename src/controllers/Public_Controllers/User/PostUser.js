@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const { User } = require('../../../db');
 const nodemailer = require("nodemailer");
+const generacion_de_clave = require ("../../../security/generacion_de_clave")
 const fs = require('fs'); 
 const bcrypt = require('bcrypt');
 require('dotenv').config();
@@ -15,22 +16,29 @@ cloudinary.config({
 });
 const PostUser = async (req, res) => {
     try {
-      const { name, email, password, country } = req.body;
+      const { name, email, password, country,admin } = req.body;
+      let isAdmin = false;
       let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1691329757/_b79b5441-a3f7-449e-ba5d-24c5be6c9207_q4m1au.jpg';
       const existingUser = await User.findOne({ where: { email } });
 
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
       if (req.file) {
+        console.log("subiendo imagen a cloudinary")
         const uploadedImage = await cloudinary.uploader.upload(req.file.path);
         pictureUrl = uploadedImage.secure_url;
+        fs.unlinkSync(req.file.path)
 ////////////////////BORRAR LA IMAGEN DEL CACHE////////////////////////////////////////////////////////
-        fs.unlinkSync(req.file.path); }
+        ; }
 /////////////////SI NO HAY NOMBRE OCUPAR PARTE DEL EMAIL /////////////////////////////////////////////////////////////////////////////
       if (!name) {
         name = email.split('@')[0]; 
       }
       if (!country) {
         country= "No Especificado"
+      }
+
+      if(admin==="on"){
+        isAdmin=true
       }
 //////////////////////////////////////////////////////////////////////////////////////////////
       if (existingUser) {
@@ -40,13 +48,22 @@ const PostUser = async (req, res) => {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////generacion de token de verificacion de email //////////////////////////////////////////////////////////////////////////////
+      const keyLengthInBytes = 32;
+       const secretKey = await generacion_de_clave(keyLengthInBytes)
+      const verificationToken = secretKey
+      console.log(verificationToken)
+
+/////////////////////////////////////////////////////
       const newUser = await User.create({
         name,
         email,
         password: hashedPassword,
         picture: pictureUrl,
+        admin:isAdmin,
         country,
+        verificationToken,
+        tokenCreationTime: new Date()
       });
 
 //Nodemailer /////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +87,7 @@ const mailOptions = {
     <p>Gracias por registrarte en nuestra aplicación. ¡Esperamos que disfrutes usando nuestros servicios!</p>
     <p>Puedes dejar comentarios y puntuaciones en tu proyecto una vez publicado en nuestra página para esto.</p>
     <h2>Haz clic en el siguiente enlace para verificar tu correo electrónico:</h2>
-    <a href="${DEPLOYMENT_URL}/VerifyEmail">${DEPLOYMENT_URL}/VerifyEmail</a>
+    <a href="${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}">${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}</a>
     <p>Saludos,</p>
     <p>El equipo de ProgrammersGuru</p>
   `,

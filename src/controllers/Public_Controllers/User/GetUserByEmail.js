@@ -2,16 +2,16 @@ const { User, Project, Review } = require('../../../db');
 
 const GetUserByEmail = async (req, res) => {
   try {
-
+    const userEmail = req.user?.email; 
     const user = await User.findOne({
-      where: { email: req.params.email },
+      where: { email: userEmail},
       include: [
         {
           model: Project,
           attributes: ['id', 'name', 'description', 'picture', 'url'],
           include: {
             model: Review,
-            attributes: ['id', 'Name', 'Opinion', 'rating'],
+            attributes: ['id', 'name', 'opinion', 'rating'],
             include: {
               model: Project,
               attributes: ['id', 'name', 'description', 'picture', 'url'],
@@ -20,7 +20,7 @@ const GetUserByEmail = async (req, res) => {
         },
         {
           model: Review,
-          attributes: ['id', 'Name', 'Opinion', 'rating'],
+          attributes: ['id', 'name', 'opinion', 'rating'],
           include: {
             model: Project,
             attributes: ['id', 'name', 'description', 'picture', 'url'],

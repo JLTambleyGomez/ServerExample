@@ -13,6 +13,7 @@ const AuthenticateUser = require("../controllers/Public_Controllers/User/Authent
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
 const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb");
 const SolicitudeProjects = require("../controllers/Public_Controllers/Projects/SolicitudeProjects");
+const ReSendEmail = require("../controllers/Public_Controllers/User/ReSendEmail");
 // const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
 const router = Router();
 
@@ -41,17 +42,18 @@ router.get("/GetReviews",limiter,GetReviews)
 //routesProtected/////////////////////////////////////////////////////////////////////////////////////
 router.use(authMiddleware)
 //projects
-router.post("SolicitudeProjects",SolicitudeProjects)
+router.post("/SolicitudeProjects",limiter,SolicitudeProjects)
 // reviews
 router.post("/PostReview",PostReview)
 //user 
 router.get("/GetUserByEmail",GetUserByEmail)
-router.put("/VerifyEmail",PutCheckEmail)
+router.put("/PutCheckEmail",limiter,PutCheckEmail)
+router.post("/ReSendEmailVerification",limiter,ReSendEmail)
 
 //users only administration
 router.get("/GetUser",GetUsers)
 //projects
-router.post("/PostProjects",PostProjects)
+router.post("/PostProject",upload.single('picture'),PostProjects)
 // router.delete("/DeleteProject",DeleteProject)
 
 

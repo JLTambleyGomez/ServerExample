@@ -14,16 +14,16 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       picture: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       url: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     { timestamps: false, freezeTableName: true }

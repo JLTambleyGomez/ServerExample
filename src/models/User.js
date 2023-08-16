@@ -23,6 +23,17 @@ module.exports = (sequelize) => {
                 defaultValue: false,
                 allowNull: true,
             },
+
+            verificationToken:{
+                type:DataTypes.STRING,
+                defaultValue: false,
+                allowNull: true
+            },
+            tokenCreationTime: {
+                type: DataTypes.DATE, 
+                allowNull: true
+            },
+
             picture: {
                 type: DataTypes.STRING,
                 allowNull: true,

@@ -12,10 +12,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    projectName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
     opinion: {
       type: DataTypes.STRING,
       validate: {

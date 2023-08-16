@@ -3,12 +3,14 @@ require('dotenv').config();
 
 const SolicitudeProjects = async (req, res) => {
   const user = req.user
-
+  const email = req.user.email
   if (!user) {
     return res.status(403).json({ message: 'Acceso no autorizado' });
   }
-  const { email, message,phone} = req.body;
+  const { message,phone} = req.body;
   const { OFFICIAL_EMAIL, PASSWORD } = process.env;
+
+  console.log(email,message,phone)
 
   try {
     const transporter = nodemailer.createTransport({

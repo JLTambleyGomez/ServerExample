@@ -10,7 +10,7 @@ const GetProjects = async (req, res) => {
         },
         {
           model: Review,
-          attributes: ['id', 'Name', 'Opinion', 'rating'],
+          attributes: ['id', 'name', 'opinion', 'rating',],
           include: {
             model: User,
             attributes: ['id', 'name', 'email', 'picture'],

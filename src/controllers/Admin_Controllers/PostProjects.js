@@ -14,22 +14,34 @@ cloudinary.config({
 const PostProject = async (req, res) => {
   try {
     const isAdmin = req.user?.admin; //
+    const userId = req.user?.id
 
     if (!isAdmin) {
       return res.status(403).json({ message: 'Acceso no autorizado' });
     }
+    const { name, description, url, urlPicture} = req.body;
+    console.log(name,description,url,urlPicture)
+    let pictureUrl="https://res.cloudinary.com/ddectuilp/image/upload/v1691994192/1_bdlq4m.png"
 
-    const { name, description, picture, url, userId } = req.body;
+    if(urlPicture){
+      pictureUrl=urlPicture
+    }
 
-    const uploadedImage = await cloudinary.uploader.upload(picture);
-    const pictureUrl = uploadedImage.secure_url;
+    if (req.file) {
+      console.log("subiendo imagen a cloudinary")
+      const uploadedImage = await cloudinary.uploader.upload(req.file.path);
+      pictureUrl = uploadedImage.secure_url;
+      fs.unlinkSync(req.file.path)
+////////////////////BORRAR LA IMAGEN DEL CACHE////////////////////////////////////////////////////////
+      ; }
+ 
 
     const newProject = await Project.create({
-      name,
-      description,
+      name:name,
+      description:description,
       picture: pictureUrl,
-      url,
-      userId,
+      url:url,
+      userId:userId,
     });
 
     return res.status(201).json(newProject);
