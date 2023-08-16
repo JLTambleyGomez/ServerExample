@@ -24,10 +24,11 @@
   "main": "index.js",
   "scripts": {
     "start1": "nodemon index.js",
+    "server": "node ./index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "programmersguruteam",
+  "author": "Jorge Tambley",
   "license": "ISC",
   "description": ""
 }
