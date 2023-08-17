@@ -70,7 +70,7 @@ if (name) {
     user.admin = admin;
   }
   
-if (password) {
+if (password===null||password===undefined) {
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
