@@ -2,7 +2,6 @@ const cloudinary = require('cloudinary').v2;
 const { User } = require('../../../db');
 const nodemailer = require("nodemailer");
 const generacion_de_clave = require ("../../../security/generacion_de_clave")
-const fs = require('fs'); 
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
@@ -22,13 +21,7 @@ const PostUser = async (req, res) => {
       const existingUser = await User.findOne({ where: { email } });
 
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
-      if (req.file) {
-        console.log("subiendo imagen a cloudinary")
-        const uploadedImage = await cloudinary.uploader.upload(req.file.path);
-        pictureUrl = uploadedImage.secure_url;
-        fs.unlinkSync(req.file.path)
-////////////////////BORRAR LA IMAGEN DEL CACHE////////////////////////////////////////////////////////
-        ; }
+
 /////////////////SI NO HAY NOMBRE OCUPAR PARTE DEL EMAIL /////////////////////////////////////////////////////////////////////////////
       if (!name) {
         name = email.split('@')[0]; 

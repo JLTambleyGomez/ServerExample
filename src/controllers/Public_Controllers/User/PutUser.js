@@ -1,7 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const { User } = require('../../../db');
 const nodemailer = require("nodemailer");
-const fs = require('fs'); 
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
@@ -33,15 +32,31 @@ const PutUser = async (req, res) => {
   
     
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
-    if (req.file) {
-      console.log("subiendo imagen a cloudinary")
-      const uploadedImage = await cloudinary.uploader.upload(req.file.path);
-      pictureUrl = uploadedImage.secure_url;
-      user.picture = pictureUrl;
+if (req.file) {
+    try {
+        const buffer = req.file.buffer;
+        const uploadedImage = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                (error, result) => {
+                    if (result) {
+                        console.log("Subiendo imagen a Cloudinary");
+                        resolve(result);
+                    } else {
+                        reject(error);
+                    }
+                }
+            ).end(buffer);
+        });
 
-      fs.unlinkSync(req.file.path)
-////////////////////BORRAR LA IMAGEN DEL CACHE////////////////////////////////////////////////////////
-      ; }
+        const pictureUrl = uploadedImage.secure_url;
+        user.picture = pictureUrl;
+    } catch (error) {
+        console.error("Error al subir el archivo a Cloudinary:", error);
+        return res.status(500).json({
+            error: "Error interno del servidor al subir la imagen",
+        });
+    }
+}
 /////////////////SI NO HAY NOMBRE OCUPAR PARTE DEL EMAIL /////////////////////////////////////////////////////////////////////////////
 if (name) {
     user.name = name;
@@ -104,7 +119,7 @@ const transporter = nodemailer.createTransport({
     if (error) {
       console.error('Error sending welcome email:', error);
     } else {
-      console.log('Welcome email sent:', info.response);
+      console.log(' email sent:', info.response);
     }
   });
   

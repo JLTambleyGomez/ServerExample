@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const rateLimit = require('express-rate-limit');
-const upload = require('../utils/multer/multer'); 
+const multer = require('multer'); 
 const authMiddleware = require("../security/authMiddleware");
 const PutCheckEmail = require("../controllers/Public_Controllers/User/PutCheckEmail");
 const GetProjects = require("../controllers/Public_Controllers/Projects/GetProjects");
@@ -16,7 +16,11 @@ const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb"
 const SolicitudeProjects = require("../controllers/Public_Controllers/Projects/SolicitudeProjects");
 const ReSendEmail = require("../controllers/Public_Controllers/User/ReSendEmail");
 // const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
+
 const router = Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const limiter = rateLimit({
     windowMs: 1000, 
