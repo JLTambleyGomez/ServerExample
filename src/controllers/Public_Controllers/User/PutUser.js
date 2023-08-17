@@ -37,6 +37,9 @@ if (req.file) {
         const buffer = req.file.buffer;
         const uploadedImage = await new Promise((resolve, reject) => {
             cloudinary.uploader.upload_stream(
+              {
+                folder: 'Users_Images', // Especifica la carpeta en Cloudinary
+              },
                 (error, result) => {
                     if (result) {
                         console.log("Subiendo imagen a Cloudinary");

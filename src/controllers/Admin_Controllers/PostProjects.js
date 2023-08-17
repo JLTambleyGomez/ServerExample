@@ -33,6 +33,9 @@ const PostProject = async (req, res) => {
         const buffer = req.file.buffer;
         const uploadedImage = await new Promise((resolve, reject) => {
             cloudinary.uploader.upload_stream(
+              {
+                folder: 'Projects_Images',
+              },
                 (error, result) => {
                     if (result) {
                         console.log("Subiendo imagen a Cloudinary");
