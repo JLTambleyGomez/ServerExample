@@ -23,7 +23,6 @@ const PutUser = async (req, res) => {
 
     const { name, password, country,admin } = req.body;
 
-    console.log(name, password, country, admin,)
         const user = await User.findOne({
           where: {
             id: Userid
@@ -73,10 +72,12 @@ if (name) {
     user.admin = admin;
   }
   
-if (password===null||password===undefined) {
+if (password!==null||password!==undefined) {
+      console.log(password)
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(hashedPassword);
     user.password = hashedPassword;
   }
   
