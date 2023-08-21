@@ -17,7 +17,7 @@ const keyLengthInBytes = 32;
 
 generateSecretKey(keyLengthInBytes)
   .then((secretKey) => {
-    console.log(secretKey);
+    // console.log(secretKey);
     return secretKey
 
   })
