@@ -1,4 +1,4 @@
-const { User, Project, Review } = require('../../../db');
+const { User, Job } = require('../../../db');
 
 const GetUserByEmail = async (req, res) => {
   try {
@@ -7,25 +7,12 @@ const GetUserByEmail = async (req, res) => {
       where: { email: userEmail},
       include: [
         {
-          model: Project,
-          attributes: ['id', 'name', 'description', 'picture', 'url'],
-          include: {
-            model: Review,
-            attributes: ['id', 'name', 'opinion', 'rating'],
-            include: {
-              model: Project,
-              attributes: ['id', 'name', 'description', 'picture', 'url'],
-            },
-          },
+          model: Job,
+          attributes: ['id', 'name', 'jobTitle', 'stage', 'url'],
+       
+       
         },
-        {
-          model: Review,
-          attributes: ['id', 'name', 'opinion', 'rating'],
-          include: {
-            model: Project,
-            attributes: ['id', 'name', 'description', 'picture', 'url'],
-          },
-        },
+       
       ],
     });
 

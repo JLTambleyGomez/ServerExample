@@ -73,17 +73,17 @@ const transporter = nodemailer.createTransport({
 const mailOptions = {
   from: OFFICIAL_EMAIL,
   to: email,
-  subject: "Bienvenido a Programmers Guru",
+  subject: "Welcome to JobAppTracker",
   html: `
-    <h1>¡Hola ${name}!</h1>
-    <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1691336612/Programmers_d0arws.png" alt="Programmers Guru" width="300">
-    <p>Gracias por registrarte en nuestra aplicación. ¡Esperamos que disfrutes usando nuestros servicios!</p>
-    <p>Puedes dejar comentarios y puntuaciones en tu proyecto una vez publicado en nuestra página para esto.</p>
-    <h2>Haz clic en el siguiente enlace para verificar tu correo electrónico:</h2>
+    <h1>Hello ${name}!</h1>
+    <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692577472/_e2a8c7ab-240a-43e1-88ba-08eae9b0b5ba_mcpwjk.jpg" alt="Programmers Guru" width="300">
+    <p>Thank you for registering with our application. We hope you enjoy using our services!</p>
+    <p>You can keep track of and manage your job applications on our website.</p>
+    <h2>Click on the following link to verify your email:</h2>
     <a href="${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}">${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}</a>
-    <p>Saludos,</p>
-    <p>El equipo de ProgrammersGuru</p>
-  `,
+    <p>Best regards,</p>
+    <p>The JobAppTracker Team</p>
+  `,  
 };
 
 transporter.sendMail(mailOptions, (error, info) => {

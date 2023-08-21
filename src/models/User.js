@@ -44,11 +44,6 @@ module.exports = (sequelize) => {
                 allowNull: true,
             },
    
-            country:{
-                type: DataTypes.STRING,
-                defaultValue:false,
-                allowNull: true,
-            },
             password: { 
                 type: DataTypes.STRING,
                 allowNull: false
