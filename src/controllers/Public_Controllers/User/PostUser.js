@@ -17,7 +17,7 @@ const PostUser = async (req, res) => {
     try {
       const { name, email, password, country,admin } = req.body;
       let isAdmin = false;
-      let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1691329757/_b79b5441-a3f7-449e-ba5d-24c5be6c9207_q4m1au.jpg';
+      let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1692586802/_132d9c59-c4db-4ac5-9019-12b712c5c542_vzi3jv.jpg';
       const existingUser = await User.findOne({ where: { email } });
 
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
