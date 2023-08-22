@@ -12,6 +12,7 @@ const PostJob = async (req, res) => {
       jobTitle,
       stage,
       userId:id ,
+      date: new Date(),
     });
 
     return res.status(201).json(newJob);

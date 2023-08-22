@@ -4,11 +4,13 @@ const multer = require('multer');
 const authMiddleware = require("../security/authMiddleware");
 const PostJob = require("../controllers/Public_Controllers/Jobs/PostJob")
 const PutJob = require("../controllers/Public_Controllers/Jobs/PutJob")
+const DeleteJob = require("../controllers/Public_Controllers/Jobs/DeleteJob")
 const GetJobs = require("../controllers/Public_Controllers/Jobs/GetJobs")
 const PutCheckEmail = require("../controllers/Public_Controllers/User/PutCheckEmail");
 const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
 const PutUser = require("../controllers/Public_Controllers/User/PutUser");
+const DeleteUser = require("../controllers/Public_Controllers/User/DeleteUser");
 const AuthenticateUser = require("../controllers/Public_Controllers/User/AuthenticateUser");
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
 const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb");
@@ -45,10 +47,12 @@ router.use(authMiddleware)
 router.put("/PutUser",limiter,upload.single('picture'),PutUser)
 router.get("/GetUserByEmail",GetUserByEmail)
 router.post("/ReSendEmailVerification",limiter,ReSendEmail)
+router.delete("/DeleteUser",DeleteUser)
 //jobs
 router.post("/PostJob",upload.single('picture'),PostJob)
 router.get("/GetJob",limiter,GetJobs)
 router.put("/PutJob",limiter,PutJob)
+router.delete("/DeleteJob/:jobId",limiter, DeleteJob);
 
 
 

@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 
-const {PASSWORD,OFFICIAL_EMAIL, CLOUD_NAME, API_KEY_CLOUDINARY, API_SECRET_CLOUDINARY,DEPLOYMENT_URL } = process.env;
+const {PASSWORD,OFFICIAL_EMAIL, CLOUD_NAME, API_KEY_CLOUDINARY, API_SECRET_CLOUDINARY } = process.env;
 
 
 cloudinary.config({
@@ -21,7 +21,7 @@ const PutUser = async (req, res) => {
     const email = req.user.email
     const UserAdmin= req.user.admin
 
-    const { name, password, country,admin } = req.body;
+    const { name, password,admin } = req.body;
 
         const user = await User.findOne({
           where: {
@@ -60,19 +60,11 @@ if (req.file) {
     }
 }
 /////////////////SI NO HAY NOMBRE OCUPAR PARTE DEL EMAIL /////////////////////////////////////////////////////////////////////////////
-if (name) {
-    user.name = name;
-  }
-  
-  if (country) {
-    user.country = country;
-  }
-  
-  if (UserAdmin && admin ) {
-    user.admin = admin;
-  }
-  
-if (password!==null||password!==undefined) {
+user.name = name || user.name;
+if (UserAdmin && admin) {
+  user.admin = admin;
+}  
+if  (password !== null && password !== undefined && password !== "") {
       console.log(password)
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
@@ -111,7 +103,7 @@ const transporter = nodemailer.createTransport({
     subject: "User Modified on JobAppTracker",
     html: `
       <h1>Hello ${name}!</h1>
-      <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692577472/_e2a8c7ab-240a-43e1-88ba-08eae9b0b5ba_mcpwjk.jpg" alt="Programmers Guru" width="300">
+      <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692663705/home2_rpur5u.png" alt="JobAppTracker" width="300">
       <p>Your user profile has been successfully modified.</p>
       <p>Thank you for using our application. We hope you continue to enjoy our services!</p>
       <p>Best regards,</p>

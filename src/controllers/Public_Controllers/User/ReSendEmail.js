@@ -33,7 +33,7 @@ const mailOptions = {
   subject: "New JobAppTracker Verification Link",
   html: `
   <h1>Hello ${name}!</h1>
-  <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692577472/_e2a8c7ab-240a-43e1-88ba-08eae9b0b5ba_mcpwjk.jpg" alt="Programmers Guru" width="300">
+  <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692663705/home2_rpur5u.png" alt="JobAppTracker" width="300">
   <p>Thank you for registering with our application. We hope you enjoy using our services!</p>
   <h2>This is your new link to verify your email:</h2>
   <a href="${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}">${DEPLOYMENT_URL}/VerifyEmail?token=${verificationToken}</a>

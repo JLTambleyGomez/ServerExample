@@ -15,9 +15,9 @@ cloudinary.config({
 });
 const PostUser = async (req, res) => {
     try {
-      const { name, email, password, country,admin } = req.body;
+      const { name, email, password } = req.body;
       let isAdmin = false;
-      let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1692586802/_132d9c59-c4db-4ac5-9019-12b712c5c542_vzi3jv.jpg';
+      let pictureUrl = 'https://res.cloudinary.com/ddectuilp/image/upload/v1692725809/Welcome_f74obp.png';
       const existingUser = await User.findOne({ where: { email } });
 
 //////////SE TOMA EL ARCHIVO (USAR MULTER VERIFICA LAS RUTAS)/////////////////
@@ -26,13 +26,8 @@ const PostUser = async (req, res) => {
       if (!name) {
         name = email.split('@')[0]; 
       }
-      if (!country) {
-        country= "No Especificado"
-      }
 
-      if(admin==="on"){
-        isAdmin=true
-      }
+    
 //////////////////////////////////////////////////////////////////////////////////////////////
       if (existingUser) {
         return res.status(409).json({ message: 'El email ya está en uso. Por favor, elija otro email.' });
@@ -53,8 +48,6 @@ const PostUser = async (req, res) => {
         email,
         password: hashedPassword,
         picture: pictureUrl,
-        admin:isAdmin,
-        country,
         verificationToken,
         tokenCreationTime: new Date()
       });
@@ -76,7 +69,7 @@ const mailOptions = {
   subject: "Welcome to JobAppTracker",
   html: `
     <h1>Hello ${name}!</h1>
-    <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692577472/_e2a8c7ab-240a-43e1-88ba-08eae9b0b5ba_mcpwjk.jpg" alt="Programmers Guru" width="300">
+    <img src="https://res.cloudinary.com/ddectuilp/image/upload/v1692725809/Welcome_f74obp.png" alt="JobAppTracker" width="300">
     <p>Thank you for registering with our application. We hope you enjoy using our services!</p>
     <p>You can keep track of and manage your job applications on our website.</p>
     <h2>Click on the following link to verify your email:</h2>
