@@ -1,11 +1,10 @@
 const { Router } = require("express");
 const rateLimit = require('express-rate-limit');
 const multer = require('multer'); 
+
+///////////////////////USER- AND - BASIC CONFIGURATION (RECICLE)///////////////////////////
 const authMiddleware = require("../security/authMiddleware");
-const PostJob = require("../controllers/Public_Controllers/Jobs/PostJob")
-const PutJob = require("../controllers/Public_Controllers/Jobs/PutJob")
-const DeleteJob = require("../controllers/Public_Controllers/Jobs/DeleteJob")
-const GetJobs = require("../controllers/Public_Controllers/Jobs/GetJobs")
+const GetGoogleCredential = require("../controllers/Public_Controllers/User/GetGoogleCredential")
 const PutCheckEmail = require("../controllers/Public_Controllers/User/PutCheckEmail");
 const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
@@ -15,7 +14,14 @@ const AuthenticateUser = require("../controllers/Public_Controllers/User/Authent
 const GetUserByEmail = require("../controllers/Public_Controllers/User/GetUserByEmail");
 const CheckUserDb = require("../controllers/Public_Controllers/User/CheckUserDb");
 const ReSendEmail = require("../controllers/Public_Controllers/User/ReSendEmail");
-// const DeleteProject = require("../controllers/Admin_controllers/DeleteProject");
+
+////////////////////// SPECIFIC APPLICATION FUNCTIONS //////////////////////////////
+const PostJob = require("../controllers/Public_Controllers/Jobs/PostJob")
+const PutJob = require("../controllers/Public_Controllers/Jobs/PutJob")
+const DeleteJob = require("../controllers/Public_Controllers/Jobs/DeleteJob")
+const GetJobs = require("../controllers/Public_Controllers/Jobs/GetJobs")
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const router = Router();
 
@@ -39,7 +45,7 @@ router.post("/AuthenticateUser",limiter,AuthenticateUser)
 router.post("/PostUser",limiterPostUser, upload.single('picture'),PostUser)
 router.post("/CheckUserDb",limiter,CheckUserDb)
 router.put("/PutCheckEmail",limiter,PutCheckEmail)
-
+router.get ("/GetGoogleCredential", limiter, GetGoogleCredential)
 
 //routesProtected/////////////////////////////////////////////////////////////////////////////////////
 router.use(authMiddleware)

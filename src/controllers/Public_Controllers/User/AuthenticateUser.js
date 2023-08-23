@@ -7,9 +7,9 @@ const secretKey = Secret_Key_Security;
 
 const AuthenticateUser = async (req, res) => {
   try {
-    const { email, password,admin } = req.body;
+    const { email, password,admin,externalUser } = req.body;
        //validación (sanitizado)
-       if (!email || !password) {
+       if (!email ) {
         return res.status(400).json({ message: 'Por favor, ingrese un email y una contraseña válida' });
       }
       //
@@ -22,11 +22,18 @@ const AuthenticateUser = async (req, res) => {
       return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!externalUser) {
+      if (!password) {
+        return res.status(400).json({ message: 'Por favor, ingrese una contraseña válida' });
+      }
 
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
+      if (!passwordMatch) {
+        return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+      }
     }
+
 
     // Incluir el campo 'admin' en el payload del token
     const payload = { id: user.id, email: user.email, admin: user.admin };

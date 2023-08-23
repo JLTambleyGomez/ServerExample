@@ -43,10 +43,16 @@ module.exports = (sequelize) => {
                 defaultValue: false,
                 allowNull: true,
             },
+
+            externalUser:{
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: true,
+            },
    
             password: { 
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
        
         },
