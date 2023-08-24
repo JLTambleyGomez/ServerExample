@@ -4,7 +4,8 @@ const multer = require('multer');
 
 ///////////////////////USER- AND - BASIC CONFIGURATION (RECICLE)///////////////////////////
 const authMiddleware = require("../security/authMiddleware");
-const GetGoogleCredential = require("../controllers/Public_Controllers/User/GetGoogleCredential")
+const GetGoogleCredential = require("../controllers/Public_Controllers/User/GetGoogleCredential");
+const GetGithubCredentials = require("../controllers/Public_Controllers/User/GetGithubCredentials");
 const PutCheckEmail = require("../controllers/Public_Controllers/User/PutCheckEmail");
 const GetUsers = require("../controllers/Admin_Controllers/GetUsers");
 const PostUser = require("../controllers/Public_Controllers/User/PostUser");
@@ -46,6 +47,8 @@ router.post("/PostUser",limiterPostUser, upload.single('picture'),PostUser)
 router.post("/CheckUserDb",limiter,CheckUserDb)
 router.put("/PutCheckEmail",limiter,PutCheckEmail)
 router.get ("/GetGoogleCredential", limiter, GetGoogleCredential)
+router.post ("/GetGithubCredentials", limiter, GetGithubCredentials)
+
 
 //routesProtected/////////////////////////////////////////////////////////////////////////////////////
 router.use(authMiddleware)

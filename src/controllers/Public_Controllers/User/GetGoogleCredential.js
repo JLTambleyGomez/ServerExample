@@ -1,6 +1,6 @@
 require("dotenv").config(); // para recibir las constantes de .env
 
-const client_id= process.env.CLIENT_ID
+const client_id= process.env.GOOGLE_CLIENT_ID
 
 const GetGoogleCredential = (req, res,) =>{
  try{
